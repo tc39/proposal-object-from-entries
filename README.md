@@ -15,6 +15,7 @@ key value pairs into an object.
     - [Symbol keys](#symbol-keys)
     - [Coercion of keys](#coercion-of-keys)
     - [Handling of invalid keys](#handling-of-invalid-keys)
+    - [Additional arguments](#additional-arguments)
     - [Method name](#method-name)
 
 <!-- /MarkdownTOC -->
@@ -118,6 +119,14 @@ Assuming no coercion, and regardless of the restriction on symbol keys, one
 could argue that invalid keys, or perhaps symbol keys specifically, should be
 ignored rather than case an exception to be thrown. I don’t think this is likely
 the desired behavior, but I figured I should note the possibility.
+
+### Additional arguments
+
+The `Array.from` method permits a mapping function and a `this` context argument
+in addition to the source object. Perhaps it is desirable to do the same here
+for consistency. On the other hand, `Array.from` might be seen as a unique case
+because of its use case for converting 'array-like' non-iterables, and there is
+no analog to that behavior for other collection types.
 
 ### Method name
 
