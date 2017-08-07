@@ -75,10 +75,10 @@ object. That is:
 - a new empty object (*obj*) is created
 - for each *IteratorStep*:
   - if the *IteratorValue* is not an object, a `TypeError` is thrown;
-  - *k* and *v* are the properties 0 and 1 of the *IteratorValue*;
+  - *k* and *v* are the values of the properties 0 and 1 of the *IteratorValue*;
   - the type of *k* is asserted to be string (see note in considerations below)
   - [*Set*](https://tc39.github.io/ecma262/#sec-set-o-p-v-throw) is called with
-    *obj*, *k*, *v* and *true* — this will throw a `TypeError` is *k* is not
+    *obj*, *k*, *v* and *true* — this will throw a `TypeError` if *k* is not
     already a valid property key
 - *obj* is returned
 
