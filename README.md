@@ -86,36 +86,60 @@ Referenced internals would be:
 
 ## Runtime semantics
 
-I may get this pretty wrong, but an attempt anyway:
+I may get this pretty wrong, but an attempt anyway (note Github doesn’t permit
+setting the correct list-style-type values for each tier, should be decimal,
+alpha, roman):
 
-```
-19.1.2.x Object.fromEntries([iterable])
+**19.1.2.x Object.fromEntries([iterable])**
 
 When the `fromEntries` function is called with optional argument, the following
 steps are taken:
 
-  1. Let _obj_ be ObjectCreate(%ObjectPrototype%).
-  2. If _iterable_ is not present, let _iterable_ be undefined.
-  3. If _iterable_ is either undefined or null, return _obj_.
-  4. Let _iter_ be ? GetIterator(_iterable_).
-  5. Repeat,
-     a. Let _next_ be ? IteratorStep(_iter_).
-     b. If _next_ is false, return _obj_.
-     c. Let _nextItem_ be ? IteratorValue(_next_).
-     d. If Type(_nextItem_) is not Object, then
-        i.  Let _error_ be Completion{[[Type]]: throw, [[Value]]: a newly
-            created TypeError object, [[Target]]: empty}.
-        ii. Return ? IteratorClose(_iter_, _error_).
-     e. Let _k_ be Get(_nextItem_, "0").
-     f. If _k_ is an abrupt completion, return ? IteratorClose(_iter_, _k_).
-     g. If Type(_k_) is not String, then
-        i.  Let _error_ be Completion{[[Type]]: throw, [[Value]]: a newly
-            created TypeError object, [[Target]]: empty}.
-        ii. Return ? IteratorClose(_iter_, _error_).
-     h. Let _v_ be Get(_nextItem_, "1").
-     i. If _v_ is an abrupt completion, return ? IteratorClose(_iter_, _v_).
-     j. Perform Set(_obj_, _k_, _v_, true). // True redundant here I think.
-```
+<ol>
+  <li>Let <i>obj</i> be ObjectCreate(%ObjectPrototype%).</li>
+  <li>If <i>iterable</i> is not present, let <i>iterable</i> be undefined.</li>
+  <li>If <i>iterable</i> is either undefined or null, return <i>obj</i>.</li>
+  <li>Let <i>iter</i> be ? GetIterator(<i>iterable</i>).</li>
+  <li>
+    Repeat,
+    <ol>
+      <li>Let <i>next</i> be ? IteratorStep(<i>iter</i>).</li>
+      <li>If <i>next</i> is false, return <i>obj</i>.</li>
+      <li>Let <i>nextItem</i> be ? IteratorValue(<i>next</i>).</li>
+      <li>
+        If Type(<i>nextItem</i>) is not Object, then
+        <ol>
+          <li>
+            Let <i>error</i> be Completion<tt>{[[Type]]: throw, [[Value]]: a
+            newly created TypeError object, [[Target]]: empty}</tt>.
+          </li>
+          <li>Return ? IteratorClose(<i>iter</i>, <i>error</i>).</li>
+        </ol>
+      </li>
+      <li>Let <i>k</i> be Get(<i>nextItem</i>, "0").</li>
+      <li>
+        If <i>k</i> is an abrupt completion, return ?
+        IteratorClose(<i>iter</i>, <i>k</i>).
+      </li>
+      <li>
+        If Type(<i>k</i>) is not String, then
+        <ol>
+          <li>
+            Let <i>error</i> be Completion<tt>{[[Type]]: throw, [[Value]]: a
+            newly created TypeError object, [[Target]]: empty}.</tt>
+          </li>
+          <li>Return ? IteratorClose(<i>iter</i>, <i>error</i>).</li>
+        </ol>
+      </li>
+      <li>Let <i>v</i> be Get(<i>nextItem</i>, "1").</li>
+      <li>
+        If <i>v</i> is an abrupt completion, return ? IteratorClose(<i>iter</i>,
+        <i>v</i>).
+      </li>
+      <li>Perform Set(<i>obj</i>, <i>k</i>, <i>v</i>, true).</li>
+    </ol>
+  </li>
+</ol>
 
 ## Prior art
 
