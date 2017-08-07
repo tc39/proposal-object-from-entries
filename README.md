@@ -65,22 +65,23 @@ possible issues and alternative approaches that could be taken.
 
 In informal terms, `Object.fromEntries(iter)` would mimic the relevent behaviors
 of the [`Map` constructor](https://tc39.github.io/ecma262/#sec-map-iterable) in
-terms of what values it would accept and for what values it would throw, but
-instead of initializing a `Map`, an `Object` is initialized, and instead of
-getting and calling *adder*, *Set* is used to assign properties to the new
-object. That is:
+terms of what values it would accept and for what values it would throw, with
+the additional constraint that the _key_ of each entry be a string, and rather
+than assemble a map with _adder_, it would assemble a generic object with _Set_.
 
-- given `undefined` or `null`, it would return `{}`
-- for any other value [*GetIterator*](https://tc39.github.io/ecma262/#sec-getiterator)
-  would be called (which may throw a `TypeError`)
-- a new empty object (*obj*) is created
-- for each *IteratorStep*:
-  - if the *IteratorValue* is not an object, a `TypeError` is thrown;
-  - *k* and *v* are the values of the properties 0 and 1 of the *IteratorValue*;
-  - the type of *k* is asserted to be string (see note in considerations below)
-  - [*Set*](https://tc39.github.io/ecma262/#sec-set-o-p-v-throw) is called with
-    *obj*, *k*, *v*
-- *obj* is returned
+Referenced internals would be:
+
+- [Completion](https://tc39.github.io/ecma262/#sec-completion-record-specification-type)
+- [Get](https://tc39.github.io/ecma262/#sec-get-o-p)
+- [GetIterator](https://tc39.github.io/ecma262/#sec-getiterator)
+- [IteratorClose](https://tc39.github.io/ecma262/#sec-iteratorclose)
+- [IteratorStep](https://tc39.github.io/ecma262/#sec-iteratorstep)
+- [IteratorValue](https://tc39.github.io/ecma262/#sec-iteratorvalue)
+- [ObjectCreate](https://tc39.github.io/ecma262/#sec-objectcreate)
+- [Set](https://tc39.github.io/ecma262/#sec-set-o-p-v-throw)
+- [Type](https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values)
+- [TypeError](https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror)
+- [%ObjectPrototype%](https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object)
 
 ## Runtime semantics
 
