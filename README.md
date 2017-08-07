@@ -60,8 +60,9 @@ pairs and returns a new object.
 
 ## Behavior
 
-The following behavior is tentatively proposed; see [#considerations] for
-possible issues and alternative approaches that could be taken.
+The following behavior is tentatively proposed; see
+[Considerations](#considerations) for possible issues and alternative approaches
+that could be taken.
 
 In informal terms, `Object.fromEntries(iter)` would mimic the relevent behaviors
 of the [`Map` constructor](https://tc39.github.io/ecma262/#sec-map-iterable) in
