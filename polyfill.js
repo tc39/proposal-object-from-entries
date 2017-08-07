@@ -9,7 +9,7 @@ if (!('fromEntries' in Object)) {
     const obj = {};
 
     for (const [ index, pair ] of pairs.entries()) {
-      if (!pair || typeof pair !== 'object') {
+      if (Object(pair) !== pair) {
         // Consistent messaging to Chrome when initializing a Map:
         throw new TypeError(`Iterator value ${ index } is not an entry object`);
       }
