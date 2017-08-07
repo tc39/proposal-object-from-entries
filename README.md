@@ -70,20 +70,6 @@ terms of what values it would accept and for what values it would throw, with
 the additional constraint that the _key_ of each entry be a string, and rather
 than assemble a map with _adder_, it would assemble a generic object with _Set_.
 
-Referenced internals would be:
-
-- [Completion](https://tc39.github.io/ecma262/#sec-completion-record-specification-type)
-- [Get](https://tc39.github.io/ecma262/#sec-get-o-p)
-- [GetIterator](https://tc39.github.io/ecma262/#sec-getiterator)
-- [IteratorClose](https://tc39.github.io/ecma262/#sec-iteratorclose)
-- [IteratorStep](https://tc39.github.io/ecma262/#sec-iteratorstep)
-- [IteratorValue](https://tc39.github.io/ecma262/#sec-iteratorvalue)
-- [ObjectCreate](https://tc39.github.io/ecma262/#sec-objectcreate)
-- [Set](https://tc39.github.io/ecma262/#sec-set-o-p-v-throw)
-- [Type](https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values)
-- [TypeError](https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror)
-- [%ObjectPrototype%](https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object)
-
 ## Runtime semantics
 
 I may get this pretty wrong, but an attempt anyway (note Github doesn’t permit
@@ -96,47 +82,47 @@ When the `fromEntries` function is called with optional argument, the following
 steps are taken:
 
 <ol>
-  <li>Let <i>obj</i> be ObjectCreate(%ObjectPrototype%).</li>
+  <li>Let <i>obj</i> be <a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a>(<a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a>).</li>
   <li>If <i>iterable</i> is not present, let <i>iterable</i> be undefined.</li>
   <li>If <i>iterable</i> is either undefined or null, return <i>obj</i>.</li>
-  <li>Let <i>iter</i> be ? GetIterator(<i>iterable</i>).</li>
+  <li>Let <i>iter</i> be ? <a href="https://tc39.github.io/ecma262/#sec-getiterator">GetIterator</a>(<i>iterable</i>).</li>
   <li>
     Repeat,
     <ol>
-      <li>Let <i>next</i> be ? IteratorStep(<i>iter</i>).</li>
+      <li>Let <i>next</i> be ? <a href="https://tc39.github.io/ecma262/#sec-iteratorstep">IteratorStep</a>(<i>iter</i>).</li>
       <li>If <i>next</i> is false, return <i>obj</i>.</li>
-      <li>Let <i>nextItem</i> be ? IteratorValue(<i>next</i>).</li>
+      <li>Let <i>nextItem</i> be ? <a href="https://tc39.github.io/ecma262/#sec-iteratorvalue">IteratorValue</a>(<i>next</i>).</li>
       <li>
-        If Type(<i>nextItem</i>) is not Object, then
+        If <a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<i>nextItem</i>) is not Object, then
         <ol>
           <li>
-            Let <i>error</i> be Completion<tt>{[[Type]]: throw, [[Value]]: a
-            newly created TypeError object, [[Target]]: empty}</tt>.
+            Let <i>error</i> be <a href="https://tc39.github.io/ecma262/#sec-completion-record-specification-type">Completion</a><tt>{[[Type]]: throw, [[Value]]: a
+            newly created <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror">TypeError</a> object, [[Target]]: empty}</tt>.
           </li>
-          <li>Return ? IteratorClose(<i>iter</i>, <i>error</i>).</li>
+          <li>Return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>error</i>).</li>
         </ol>
       </li>
-      <li>Let <i>k</i> be Get(<i>nextItem</i>, "0").</li>
+      <li>Let <i>k</i> be <a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<i>nextItem</i>, "0").</li>
       <li>
         If <i>k</i> is an abrupt completion, return ?
-        IteratorClose(<i>iter</i>, <i>k</i>).
+        <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>k</i>).
       </li>
       <li>
-        If Type(<i>k</i>) is not String, then
+        If <a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<i>k</i>) is not String, then
         <ol>
           <li>
             Let <i>error</i> be Completion<tt>{[[Type]]: throw, [[Value]]: a
-            newly created TypeError object, [[Target]]: empty}.</tt>
+            newly created <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror">TypeError</a> object, [[Target]]: empty}.</tt>
           </li>
-          <li>Return ? IteratorClose(<i>iter</i>, <i>error</i>).</li>
+          <li>Return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>error</i>).</li>
         </ol>
       </li>
-      <li>Let <i>v</i> be Get(<i>nextItem</i>, "1").</li>
+      <li>Let <i>v</i> be <a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<i>nextItem</i>, "1").</li>
       <li>
-        If <i>v</i> is an abrupt completion, return ? IteratorClose(<i>iter</i>,
+        If <i>v</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>,
         <i>v</i>).
       </li>
-      <li>Perform Set(<i>obj</i>, <i>k</i>, <i>v</i>, true).</li>
+      <li>Perform <a href="https://tc39.github.io/ecma262/#sec-set-o-p-v-throw">Set</a>(<i>obj</i>, <i>k</i>, <i>v</i>, true).</li>
     </ol>
   </li>
 </ol>
