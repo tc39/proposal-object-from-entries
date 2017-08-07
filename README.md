@@ -153,7 +153,7 @@ filters out symbol-keyed properties.
 
 ### Coercion of keys
 
-In the proposed behavior above, no express coercion of *key* to a property key
+In the proposed behavior above, no coercion of _k_ to a valid property key
 occurs. I believe this is likely the best behavior for the use cases envisioned,
 but possibly users would expect it to behave instead like computed assignment,
 which will attempt coercing any value to a property key.
