@@ -8,7 +8,8 @@ key value pairs into an object.
 - [Rationale](#rationale)
 - [Proposal](#proposal)
 - [Behavior](#behavior)
-- [Prior Art](#prior-art)
+- [Runtime semantics](#runtime-semantics)
+- [Prior art](#prior-art)
     - [Lodash](#lodash)
     - [Python](#python)
 - [Considerations](#considerations)
@@ -81,7 +82,40 @@ object. That is:
     *obj*, *k*, *v*
 - *obj* is returned
 
-## Prior Art
+## Runtime semantics
+
+I may get this pretty wrong, but an attempt anyway:
+
+```
+19.1.2.x Object.fromEntries([iterable])
+
+When the `fromEntries` function is called with optional argument, the following
+steps are taken:
+
+  1. Let _obj_ be ObjectCreate(%ObjectPrototype%).
+  2. If _iterable_ is not present, let _iterable_ be undefined.
+  3. If _iterable_ is either undefined or null, return _obj_.
+  4. Let _iter_ be ? GetIterator(_iterable_).
+  5. Repeat,
+     a. Let _next_ be ? IteratorStep(_iter_).
+     b. If _next_ is false, return _obj_.
+     c. Let _nextItem_ be ? IteratorValue(_next_).
+     d. If Type(_nextItem_) is not Object, then
+        i.  Let _error_ be Completion{[[Type]]: throw, [[Value]]: a newly
+            created TypeError object, [[Target]]: empty}.
+        ii. Return ? IteratorClose(_iter_, _error_).
+     e. Let _k_ be Get(_nextItem_, "0").
+     f. If _k_ is an abrupt completion, return ? IteratorClose(_iter_, _k_).
+     g. If Type(_k_) is not String, then
+        i.  Let _error_ be Completion{[[Type]]: throw, [[Value]]: a newly
+            created TypeError object, [[Target]]: empty}.
+        ii. Return ? IteratorClose(_iter_, _error_).
+     h. Let _v_ be Get(_nextItem_, "1").
+     i. If _v_ is an abrupt completion, return ? IteratorClose(_iter_, _v_).
+     j. Perform Set(_obj_, _k_, _v_, true). // True redundant here I think.
+```
+
+## Prior art
 
 ### Lodash
 
