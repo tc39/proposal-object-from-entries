@@ -43,7 +43,7 @@ inline reducers:
 
     obj = Array
         .from(map)
-        .reduce(([ key, val ]) => Object.assign(acc, { [key]: val }), {});
+        .reduce((acc, [ key, val ]) => Object.assign(acc, { [key]: val }), {});
 
 This can be written many different ways, and potentially adds noise because it’s
 not likely to be closely related to the outward purpose of the function doing
