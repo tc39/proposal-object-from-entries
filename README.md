@@ -111,7 +111,7 @@ steps are taken:
         If <a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<i>k</i>) is not String, then
         <ol>
           <li>
-            Let <i>error</i> be Completion<tt>{[[Type]]: throw, [[Value]]: a
+            Let <i>error</i> be <a href="https://tc39.github.io/ecma262/#sec-completion-record-specification-type">Completion</a><tt>{[[Type]]: throw, [[Value]]: a
             newly created <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror">TypeError</a> object, [[Target]]: empty}.</tt>
           </li>
           <li>Return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>error</i>).</li>
