@@ -152,7 +152,7 @@ which will attempt coercing any value to a property key.
 
 Assuming no coercion, and regardless of the restriction on symbol keys, one
 could argue that invalid keys, or perhaps symbol keys specifically, should be
-ignored rather than case an exception to be thrown. I don’t think this is likely
+ignored rather than cause an exception to be thrown. I don’t think this is likely
 the desired behavior, but I figured I should note the possibility.
 
 ### Additional arguments
