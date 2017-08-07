@@ -10,14 +10,14 @@ key value pairs into an object.
 - [Behavior](#behavior)
 - [Runtime semantics](#runtime-semantics)
 - [Prior art](#prior-art)
-    - [Lodash](#lodash)
-    - [Python](#python)
+  - [Lodash](#lodash)
+  - [Python](#python)
 - [Considerations](#considerations)
-    - [Symbol keys](#symbol-keys)
-    - [Coercion of keys](#coercion-of-keys)
-    - [Handling of invalid keys](#handling-of-invalid-keys)
-    - [Additional arguments](#additional-arguments)
-    - [Method name](#method-name)
+  - [Symbol keys](#symbol-keys)
+  - [Coercion of keys](#coercion-of-keys)
+  - [Handling of invalid keys](#handling-of-invalid-keys)
+  - [Additional arguments](#additional-arguments)
+  - [Method name](#method-name)
 
 <!-- /MarkdownTOC -->
 
@@ -68,7 +68,8 @@ In informal terms, `Object.fromEntries(iter)` would mimic the relevent behaviors
 of the [`Map` constructor](https://tc39.github.io/ecma262/#sec-map-iterable) in
 terms of what values it would accept and for what values it would throw, with
 the additional constraint that the _key_ of each entry be a string, and rather
-than assemble a map with _adder_, it would assemble a generic object with _Set_.
+than assemble a map with _adder_, it would assemble a generic object with
+_CreateDataPropertyOrThrow_.
 
 ## Runtime semantics
 
@@ -119,10 +120,16 @@ steps are taken:
       </li>
       <li>Let <i>v</i> be <a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<i>nextItem</i>, "1").</li>
       <li>
-        If <i>v</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>,
-        <i>v</i>).
+        If <i>v</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>v</i>).
       </li>
-      <li>Perform <a href="https://tc39.github.io/ecma262/#sec-set-o-p-v-throw">Set</a>(<i>obj</i>, <i>k</i>, <i>v</i>, true).</li>
+      <li>
+        Let <i>defineStatus</i> be <a href="http://www.ecma-international.org/ecma-262/8.0/#sec-createdatapropertyorthrow">CreateDataPropertyOrThrow</a>(<i>obj</i>, <i>k</i>, <i>v</i>).
+        <ol>
+          <li>
+            If <i>defineStatus</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>defineStatus</i>).
+          </li>
+        </ol>
+      </li>
     </ol>
   </li>
 </ol>
