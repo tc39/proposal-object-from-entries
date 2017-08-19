@@ -9,6 +9,10 @@ key value pairs into an object.
 - [Proposal](#proposal)
 - [Behavior](#behavior)
 - [Runtime semantics](#runtime-semantics)
+- [Examples](#examples)
+  - [Object-to-object property transformations](#object-to-object-property-transformations)
+  - [Object from Map](#object-from-map)
+  - [Object from any collection type](#object-from-any-collection-type)
 - [Prior art](#prior-art)
   - [Lodash](#lodash)
   - [Python](#python)
@@ -131,6 +135,40 @@ steps are taken:
     </ol>
   </li>
 </ol>
+
+## Examples
+
+### Object-to-object property transformations
+
+Given an object, we can perform map, filter, etc operations readily:
+
+    const obj = { abc: 1, def: 2, ghij: 3 };
+
+    const res = Object.fromEntries(Object
+      .entries(obj)
+      .filter(([ { length } ]) => length === 3)
+      .map(([ key, val ]) => [ val * 2, key ])
+    );
+    
+    // res is { 2: 'abc', 4: 'def' }
+
+### Object from Map
+
+A string-keyed map can be converted to an object readily, just as an object can
+already be converted to a map:
+
+    const map = new Map([ [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ] ]);
+    const obj = Object.fromEntries(map);
+
+    // compare existing functionality: new Map(Object.entries(obj))
+
+### Object from any collection type
+
+There’s no single correct definition for what it means to construct a POJO from
+an iterable, but any iterable can be converted to entries.
+
+    const arr = [ { name: 'Alice', age: 40 }, { name: 'Bob', age: 36 } ];
+    const obj = Object.fromEntries(arr.map(({ name, age }) => [ name, age ]));
 
 ## Prior art
 
