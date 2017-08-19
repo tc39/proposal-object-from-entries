@@ -139,6 +139,12 @@ steps are taken:
 This is already familiar to many EcmaScript developers as the underscore/lodash
 method [`_.fromPairs`](https://lodash.com/docs/4.17.4#fromPairs).
 
+In addition, `_.map(obj, fn)`, `_.filter(obj, fn)` `_.invert(obj)`, and
+`_.transform(obj, fn)` are more specialized object transformations which are
+effectively similar to using existing native Array methods (`map`, `filter`,
+`map`, and `map` respectively) on entries when the result is passed to
+`fromEntries`.
+
 ### Python
 
 In Python, a `dict` can be initialized with
