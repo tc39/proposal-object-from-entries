@@ -29,7 +29,7 @@ this is typically simple:
 
     map = new Map().set('foo', true).set('bar', false);
     arr = Array.from(map);
-    set = new Set(map);
+    set = new Set(map.values());
 
 The iterable entries of a `Map` take the form of key value pairs. This dovetails
 nicely with the pairs returned by `Object.entries`, such that you can convert
