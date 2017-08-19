@@ -245,8 +245,9 @@ only downsides might be:
   and three other instance and static collection methods that cover similar
   territory but eschew working with the entries idiom, instead opting for two
   distinct mapping functions as arguments. The given argument for favoring this
-  is that it is potentially less verbose and does not require allocating entry
-  arrays (though it requires twice as many function invocations).
+  is that it is potentially less verbose (for the use cases given there) and
+  does not imply allocating entry arrays in all cases (though it requires twice
+  as many function invocations when the value is not the member itself).
 - TJ Crowder proposed `Object.from(iter, stringOrMapFn, target)`, specifically
   addressing the case of mapping members to an object hash, where
   `stringOrMapFn` may be a property key (lodash overloading style) and `target`
