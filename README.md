@@ -22,6 +22,7 @@ key value pairs into an object.
   - [Handling of invalid keys](#handling-of-invalid-keys)
   - [Additional arguments](#additional-arguments)
   - [Method name](#method-name)
+  - [Alternative or related proposals](#alternative-or-related-proposals)
 
 <!-- /MarkdownTOC -->
 
@@ -237,3 +238,16 @@ only downsides might be:
 - doesn’t signal its symmetry with `Object.entries`
 - could be inconsistent if future methods allow building objects 'from' other
   sources
+
+### Alternative or related proposals
+
+- TheNavigateur has put together a proposal for [Array.prototype.toObject](https://github.com/TheNavigateur/arrays-and-other-iterables-to-objects-and-maps)
+  and three other instance and static collection methods that cover similar
+  territory but eschew working with the entries idiom, instead opting for two
+  distinct mapping functions as arguments. The given argument for favoring this
+  is that it is potentially less verbose and does not require allocating entry
+  arrays (though it requires twice as many function invocations).
+- TJ Crowder proposed `Object.from(iter, stringOrMapFn, target)`, specifically
+  addressing the case of mapping members to an object hash, where
+  `stringOrMapFn` may be a property key (lodash overloading style) and `target`
+  may be an existing object.
