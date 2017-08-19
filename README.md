@@ -162,10 +162,15 @@ already be converted to a map:
 
     // compare existing functionality: new Map(Object.entries(obj))
 
+This transformation may be simple for other map-like objects as well:
+
+    const query = Object.fromEntries(new URLSearchParams('foo=bar&baz=qux'));
+
 ### Object from any collection type
 
 There’s no single correct definition for what it means to construct a POJO from
-an iterable, but any iterable can be converted to entries.
+an iterable, but any iterable can be converted to entries, whether directly
+(using `Array.prototype.entries`, etc) or indirectly (arbitrary mapping).
 
     const arr = [ { name: 'Alice', age: 40 }, { name: 'Bob', age: 36 } ];
     const obj = Object.fromEntries(arr.map(({ name, age }) => [ name, age ]));
