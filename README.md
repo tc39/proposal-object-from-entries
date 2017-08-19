@@ -124,11 +124,9 @@ steps are taken:
       </li>
       <li>
         Let <i>defineStatus</i> be <a href="http://www.ecma-international.org/ecma-262/8.0/#sec-createdatapropertyorthrow">CreateDataPropertyOrThrow</a>(<i>obj</i>, <i>k</i>, <i>v</i>).
-        <ol>
-          <li>
-            If <i>defineStatus</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>defineStatus</i>).
-          </li>
-        </ol>
+      </li>
+      <li>
+        If <i>defineStatus</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>defineStatus</i>).
       </li>
     </ol>
   </li>
