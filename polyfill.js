@@ -26,7 +26,12 @@ if (!('fromEntries' in Object)) {
         throw new TypeError(`Entry object key must be a string`);
       }
 
-      obj[key] = val;
+      Object.defineProperty(obj, key, {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: val,
+      });
     }
 
     return obj;
