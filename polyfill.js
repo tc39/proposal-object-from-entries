@@ -1,7 +1,5 @@
 if (!('fromEntries' in Object)) {
   Object.fromEntries = iter => {
-    const pairs = [ ...iter ]; // calls GetIterator (Array.from would coerce)
-
     const obj = {};
 
     for (const pair of iter) {
