@@ -69,9 +69,9 @@ The following behavior is tentatively proposed; see
 [Considerations](#considerations) for possible issues and alternative approaches
 that could be taken.
 
-In informal terms, `Object.fromEntries(iter)` would mimic the relevent behaviors
-of the [`Map` constructor](https://tc39.github.io/ecma262/#sec-map-iterable) in
-terms of what values it would accept and for what values it would throw, with
+In informal terms, `Object.fromEntries(iter)` would accept an iterable which is
+expected to yield entries following the same contract as would be given to the
+[`Map` constructor](https://tc39.github.io/ecma262/#sec-map-iterable), but with
 the additional constraint that the _key_ of each entry be a string, and rather
 than assemble a map with _adder_, it would assemble a generic object with
 _CreateDataPropertyOrThrow_.
@@ -89,8 +89,6 @@ steps are taken:
 
 <ol>
   <li>Let <i>obj</i> be <a href="https://tc39.github.io/ecma262/#sec-objectcreate">ObjectCreate</a>(<a href="https://tc39.github.io/ecma262/#sec-properties-of-the-object-prototype-object">%ObjectPrototype%</a>).</li>
-  <li>If <i>iterable</i> is not present, let <i>iterable</i> be undefined.</li>
-  <li>If <i>iterable</i> is either undefined or null, return <i>obj</i>.</li>
   <li>Let <i>iter</i> be ? <a href="https://tc39.github.io/ecma262/#sec-getiterator">GetIterator</a>(<i>iterable</i>).</li>
   <li>
     Repeat,
@@ -150,7 +148,7 @@ Given an object, we can perform map, filter, etc operations readily:
       .filter(([ { length } ]) => length === 3)
       .map(([ key, val ]) => [ val * 2, key ])
     );
-    
+
     // res is { 2: 'abc', 4: 'def' }
 
 ### Object from Map
