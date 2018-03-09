@@ -19,7 +19,6 @@ key value pairs into an object.
 - [Considerations](#considerations)
   - [Symbol keys](#symbol-keys)
   - [Coercion of keys](#coercion-of-keys)
-  - [Handling of invalid keys](#handling-of-invalid-keys)
   - [Additional arguments](#additional-arguments)
   - [Method name](#method-name)
   - [Alternative or related proposals](#alternative-or-related-proposals)
@@ -71,10 +70,9 @@ that could be taken.
 
 In informal terms, `Object.fromEntries(iter)` would accept an iterable which is
 expected to yield entries following the same contract as would be given to the
-[`Map` constructor](https://tc39.github.io/ecma262/#sec-map-iterable), but with
-the additional constraint that the _key_ of each entry be a string, and rather
-than assemble a map with _adder_, it would assemble a generic object with
-_CreateDataPropertyOrThrow_.
+[`Map` constructor](https://tc39.github.io/ecma262/#sec-map-iterable). Rather
+than assemble a map with _adder_, it would coerce keys with _ToPropertyKey_ and
+assemble a generic object with _CreateDataPropertyOrThrow_.
 
 ## Runtime semantics
 
@@ -106,27 +104,21 @@ steps are taken:
           <li>Return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>error</i>).</li>
         </ol>
       </li>
-      <li>Let <i>k</i> be <a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<i>nextItem</i>, "0").</li>
+      <li>Let <i>key</i> be <a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<i>nextItem</i>, "0").</li>
       <li>
-        If <i>k</i> is an abrupt completion, return ?
-        <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>k</i>).
+        If <i>key</i> is an abrupt completion, return ?
+        <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>key</i>).
       </li>
       <li>
-        If <a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(<i>k</i>) is not String, then
-        <ol>
-          <li>
-            Let <i>error</i> be <a href="https://tc39.github.io/ecma262/#sec-completion-record-specification-type">Completion</a><tt>{[[Type]]: throw, [[Value]]: a
-            newly created <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror">TypeError</a> object, [[Target]]: empty}.</tt>
-          </li>
-          <li>Return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>error</i>).</li>
-        </ol>
+        Let <i>propertyKey</i> be ?
+        <a href="http://www.ecma-international.org/ecma-262/8.0/#sec-topropertykey">ToPropertyKey</a>(<i>key</i>).
       </li>
-      <li>Let <i>v</i> be <a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<i>nextItem</i>, "1").</li>
+      <li>Let <i>value</i> be <a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<i>nextItem</i>, "1").</li>
       <li>
-        If <i>v</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>v</i>).
+        If <i>value</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>value</i>).
       </li>
       <li>
-        Let <i>defineStatus</i> be <a href="http://www.ecma-international.org/ecma-262/8.0/#sec-createdatapropertyorthrow">CreateDataPropertyOrThrow</a>(<i>obj</i>, <i>k</i>, <i>v</i>).
+        Let <i>defineStatus</i> be <a href="http://www.ecma-international.org/ecma-262/8.0/#sec-createdatapropertyorthrow">CreateDataPropertyOrThrow</a>(<i>obj</i>, <i>propertyKey</i>, <i>value</i>).
       </li>
       <li>
         If <i>defineStatus</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>defineStatus</i>).
@@ -198,25 +190,66 @@ In Python, a `dict` can be initialized with
 
 ### Symbol keys
 
-It would be valuable if given an iterable `entries` that
-`Object.entries(Object.fromEntries(entries))` would always return an array whose
-membership (at the key/value level) is identical to `entries`. To achieve this
-behavior, however, we must disallow symbols as keys, because `Object.entries`
-filters out symbol-keyed properties.
+Symbol keys are permitted, which means that it is possible for
+`Object.fromEntries(Object.entries(Object.fromEntries(foo)))` to produce a
+different effective result from `Object.fromEntries(foo)`, as the latter could
+have symbol keys while the former never would.
+
+<details>
+  <p>
+    Discussed in [Allowing only strings as keys is harmful #5](issues/5).
+    Originally symbol keys were expressly disallowed to ensure consistent
+    round-tripping between Object.entries and Object.fromEntries; it seems that
+    there’s agreement that the constraint would be more likely to cause
+    confusion than help.
+  </p>
+
+  <p>Original text:</p>
+
+  <p>
+    <del>
+      It would be valuable if given an iterable `entries` that
+      `Object.entries(Object.fromEntries(entries))` would always return an array
+      whose membership (at the key/value level) is identical to `entries`. To
+      achieve this behavior, however, we must disallow symbols as keys, because
+      `Object.entries` filters out symbol-keyed properties.
+    </del>
+  </p>
+</details>
 
 ### Coercion of keys
 
-In the proposed behavior above, no coercion of _k_ to a valid property key
-occurs — it must be a string. I believe this is likely the best behavior for the
-use cases envisioned, but possibly users would expect it to behave instead like
-computed assignment, which will attempt coercing any value to a property key.
+The keys in entries are coerced to string as they would be when using computed
+access or defineOwnProperty, etc.
 
-### Handling of invalid keys
+<details>
+  <p>
+    Originally a non-string key would have thrown a TypeError. This seems pretty
+    undesirable after all; it would not have been consistent with expectations.
+  </p>
 
-Assuming no coercion, and regardless of the restriction on symbol keys, one
-could argue that invalid keys, or perhaps symbol keys specifically, should be
-ignored rather than cause an exception to be thrown. I don’t think this is likely
-the desired behavior, but I figured I should note the possibility.
+  <p>Original text:</p>
+
+  <p>
+    <del>
+      In the proposed behavior above, no coercion of _k_ to a valid property key
+      occurs — it must be a string. I believe this is likely the best behavior
+      for the use cases envisioned, but possibly users would expect it to behave
+      instead like computed assignment, which will attempt coercing any value to
+      a property key.
+    </del>
+  </p>
+
+  <p>
+    <del>
+      Assuming no coercion, and regardless of the restriction on symbol keys,
+      one could argue that invalid keys, or perhaps symbol keys specifically,
+      should be ignored rather than cause an exception to be thrown. I don’t
+      think this is likely the desired behavior, but I figured I should note the
+      possibility.
+    </del>
+  </p>
+</details>
 
 ### Additional arguments
 
