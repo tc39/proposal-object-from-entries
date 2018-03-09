@@ -110,8 +110,11 @@ steps are taken:
         <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>key</i>).
       </li>
       <li>
-        Let <i>propertyKey</i> be ?
+        Let <i>propertyKey</i> be
         <a href="http://www.ecma-international.org/ecma-262/8.0/#sec-topropertykey">ToPropertyKey</a>(<i>key</i>).
+      </li>
+      <li>
+        If <i>propertyKey</i> is an abrupt completion, return ? <a href="https://tc39.github.io/ecma262/#sec-iteratorclose">IteratorClose</a>(<i>iter</i>, <i>propertyKey</i>).
       </li>
       <li>Let <i>value</i> be <a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a>(<i>nextItem</i>, "1").</li>
       <li>
