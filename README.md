@@ -206,15 +206,15 @@ have symbol keys while the former never would.
 
   <p>Original text:</p>
 
-  <p>
-    <del>
+  <blockquote>
+    <p>
       It would be valuable if given an iterable `entries` that
       `Object.entries(Object.fromEntries(entries))` would always return an array
       whose membership (at the key/value level) is identical to `entries`. To
       achieve this behavior, however, we must disallow symbols as keys, because
       `Object.entries` filters out symbol-keyed properties.
-    </del>
-  </p>
+    </p>
+  </blockquote>
 </details>
 
 ### Coercion of keys
@@ -230,25 +230,22 @@ access or defineOwnProperty, etc.
 
   <p>Original text:</p>
 
-  <p>
-    <del>
+  <blockquote>
+    <p>
       In the proposed behavior above, no coercion of _k_ to a valid property key
       occurs — it must be a string. I believe this is likely the best behavior
       for the use cases envisioned, but possibly users would expect it to behave
       instead like computed assignment, which will attempt coercing any value to
       a property key.
-    </del>
-  </p>
-
-  <p>
-    <del>
+    </p>
+    <p>
       Assuming no coercion, and regardless of the restriction on symbol keys,
       one could argue that invalid keys, or perhaps symbol keys specifically,
       should be ignored rather than cause an exception to be thrown. I don’t
       think this is likely the desired behavior, but I figured I should note the
       possibility.
-    </del>
-  </p>
+    </p>
+  </blockquote>
 </details>
 
 ### Additional arguments
