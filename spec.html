@@ -11,7 +11,7 @@ contributors: Darien Maillet Valentine, Jordan Harband, Kevin Gibbons
 
 <emu-intro id="sec-intro">
   <h1>Introduction</h1>
-  <p>`Object.fromEntries` takes a list of key-value pairs, such as that produced by `Object.entries`, and returns a new object whose properties are given by those entires.</p>
+  <p>`Object.fromEntries` takes a list of key-value pairs, such as that produced by `Object.entries`, and returns a new object whose properties are given by those entries.</p>
 </emu-intro>
 
 <emu-clause id="sec-Object.fromEntries">
@@ -31,12 +31,12 @@ contributors: Darien Maillet Valentine, Jordan Harband, Kevin Gibbons
       1. Let _key_ be Get(_nextItem_, `"0"`).
       1. If _key_ is an abrupt completion, return ? IteratorClose(_iter_, _key_).
       1. Let _key_ be _key_.[[Value]]
-      1. Let _propertyKey_ be ToPropertyKey(_key_).
-      1. If _propertyKey_ is an abrupt completion, return ? IteratorClose(_iter_, _propertyKey_).
-      1. Let _propertyKey_ be _propertyKey_.[[Value]]
       1. Let _value_ be Get(_nextItem_, `"1"`).
       1. If _value_ is an abrupt completion, return ? IteratorClose(_iter_, _value_).
       1. Let _value_ be _value_.[[Value]]
+      1. Let _propertyKey_ be ToPropertyKey(_key_).
+      1. If _propertyKey_ is an abrupt completion, return ? IteratorClose(_iter_, _propertyKey_).
+      1. Let _propertyKey_ be _propertyKey_.[[Value]]
       1. Peform ! CreateDataPropertyOrThrow(_obj_, _propertyKey_, _value_).
   </emu-alg>
 
