@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "object-from-entires",
+  "description": "A TC39 proposal for Object.fromEntries.",
+  "scripts": {
+    "build": "ecmarkup spec.html > index.html"
+  },
+  "homepage": "https://github.com/bakkot/object-from-entries#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bakkot/object-from-entries.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "ecmarkup": "^3.11.5"
+  }
+}
