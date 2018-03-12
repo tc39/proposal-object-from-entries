@@ -1,13 +1,13 @@
 # Details
 
-There are number of decisions which could be made differently. This document attempts to document them and the rationals for the choices currently made.
+There are number of decisions which could be made differently. This document attempts to catalog them along with the rationales for the choices currently made.
 
 
 ### Naming
 
 The method in this proposal is named `fromEntries`. There already exists `Array.from`, and there is [a proposal](https://github.com/tc39/proposal-setmap-offrom) to add `{Set, Map, WeakSet, WeakMap}.from`; it could be argued that the method in this proposal should therefore be named `.from` for consistency.
 
-However, this is less of a "canonical" way of constructing objects than those methods are or would be, especially since this method does not allow non-data properties or prototypes. As such, `fromEntries` was chosen instead, to match `Object.entries`.
+However, this is less of a "canonical" way of constructing objects than those methods are or would be, especially since this method does not provide for defining non-data properties or setting a prototype. As such, `fromEntries` was chosen instead, to match `Object.entries`.
 
 Issue: [#7](https://github.com/bakkot/object-from-entries/issues/7).
 
@@ -28,7 +28,7 @@ This is consistent with other methds of creating or assigning to properties on o
 
 ### Symbol keys
 
-`Object.entries` does not report Symbol-keyed entries, but this proposal allows their creation (for example, `let prop = Symbol(); let obj = Object.fromEntries([prop, 0]); console.log(obj[prop]);` will report `0`). This means that `Object.entries(Object.fromEntries(arr))` may yield an array with fewer elements than `arr`.
+`Object.entries` does not report Symbol-keyed entries, but this proposal allows their creation (for example, `let prop = Symbol(); let obj = Object.fromEntries([[prop, 0]]); console.log(obj[prop]);` will report `0`). This means that `Object.entries(Object.fromEntries(arr))` may yield an array with fewer elements than `arr`.
 
 However, `fromEntries` is strictly more useful this way, and any other behavior would probably be more surprising.
 
@@ -46,14 +46,14 @@ In the common case of arrays as this behavior is equivalent unless someone has o
 
 ### Requirement that records be objects
 
-This proposal throws if the iterator yeilds a value which is not an object (that is, an `x` such that `Object(x) !== x`). This means that, for example, yielding a length-2 `string` will not work, even though the later steps which access the `"0"` and `"1"` properties would succeed and then use the first and second character of the string as the key and value respectively of a property on the resulting object.
+This proposal throws if the iterator yields a value which is not an object (that is, an `x` such that `Object(x) !== x`). This means that, for example, yielding a length-2 `string` will not work, even though the later steps which access the `"0"` and `"1"` properties would succeed and then use the first and second character of the string as the key and value respectively of a property on the resulting object.
 
 This is consistent with the `Map` constructor.
 
 
 ### Iterable or array-like
 
-This proposal requires its first argument to be an iterable, not an "array-like" (an object with a number-valued `length` property and possibly number-keyed properties). This means that passing, for example, an `arguments` object will cause this method to to throw (assuming no one has defined `Object.prototye[@@iterator]`). This is inconsistent with `Array.from`, which accepts "array-likes".
+This proposal requires its first argument to be an iterable, not an "array-like" (an object with a number-valued `length` property and possibly number-keyed properties). This means that passing, for example, an `arguments` object will cause this method to to throw (assuming no one has defined `Object.prototype[@@iterator]`). This is inconsistent with `Array.from`, which accepts "array-likes".
 
 However, the behavior of `Array.from` is very specifically [intended for the conversion of array-likes](https://github.com/tc39/proposal-setmap-offrom/issues/3#issue-175135115), and does not need to be copied elsewhere.
 
@@ -99,7 +99,7 @@ However, `Object.assign(obj, Object.fromEntries(entries))` can be used for the s
 
 ### [[Set]] vs [[DefineOwnProperty]]
 
-This proposal use `defineOwnProperty` semantics to install properties on the newly-created object.
+This proposal uses `defineOwnProperty` semantics to install properties on the newly-created object.
 
 This is consistent with `Object.assign`, and avoids triggering setters on `Object.prototype`.
 
@@ -108,9 +108,9 @@ Issue: [#2](https://github.com/bakkot/object-from-entries/issues/2).
 
 ### Duplicate keys
 
-This proposal does not explicitly handle duplicate keys, with the result that later occurances of a given key will be take precedence over earlier ones.
+This proposal does not explicitly handle duplicate keys, with the result that later occurrences of a given key will take precedence over earlier ones.
 
-This is consitent with the `Map` constructor.
+This is consistent with the `Map` constructor.
 
 
 ### Mapping function
