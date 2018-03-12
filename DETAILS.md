@@ -82,6 +82,8 @@ This proposal does not allow specifying the prototype of the resulting object.
 
 However, `Object.assign(Object.create(proto), Object.fromEntries(entries))` can be used for the same effect.
 
+Issue: [#13](https://github.com/bakkot/object-from-entries/issues/13).
+
 
 ### Non-data properties
 
@@ -101,7 +103,7 @@ However, `Object.assign(obj, Object.fromEntries(entries))` can be used for the s
 
 This proposal uses `defineOwnProperty` semantics to install properties on the newly-created object.
 
-This is consistent with `Object.assign`, and avoids triggering setters on `Object.prototype`.
+This is consistent with `Object.create` and `Array.from`, and avoids triggering setters on `Object.prototype`.
 
 Issue: [#2](https://github.com/bakkot/object-from-entries/issues/2).
 
