@@ -20,7 +20,7 @@ A proposal for a new static method `Object.fromEntries` in ECMAScript for transf
 `Object.fromEntries` is proposed to perform the reverse of `Object.entries`: it accepts an iterable of key-value pairs and returns a new object whose own keys and corresponding values are given by those pairs.
 
 ```js
-obj = Object.fromEntries([['a', 0], ['b', 1]]); // { a: 0, b: 1}
+obj = Object.fromEntries([['a', 0], ['b', 1]]); // { a: 0, b: 1 }
 ```
 
 See [DETAILS.md](https://github.com/bakkot/object-from-entries/blob/master/DETAILS.md) for details.
