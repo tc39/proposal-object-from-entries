@@ -26,8 +26,7 @@ contributors: Darien Maillet Valentine, Jordan Harband, Kevin Gibbons
       1. If _next_ is *false*, return _obj_.
       1. Let _nextItem_ be ? IteratorValue(_next_).
       1. If Type(_nextItem_) is not Object, then
-        1. Let _status_ be Completion{[[Type]]: ~throw~, [[Value]]: a newly created *TypeError* object, [[Target]]: ~empty~}.
-        1. Return ? IteratorClose(_iter_, _status_).
+        1. Return ? IteratorClose(_iter_, ThrowCompletion(a newly created *TypeError* object)).
       1. Let _key_ be Get(_nextItem_, `"0"`).
       1. If _key_ is an abrupt completion, return ? IteratorClose(_iter_, _key_).
       1. Let _key_ be _key_.[[Value]]
