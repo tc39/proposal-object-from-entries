@@ -1332,6 +1332,9 @@ emu-production > ins, emu-production > del,
 emu-grammar > ins, emu-grammar > del {
   display: block;
 }
+emu-rhs > ins, emu-rhs > del { 
+  display: inline;
+}
 
 tr.ins > td > ins {
   border-bottom: none;
@@ -1796,7 +1799,13 @@ li.menu-search-result-term:before {
   text-align: right;
   padding-right: 5px;
 }
-</style></head><body><div id="menu-toggle">☰</div><div id="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins</div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-intro" title="Introduction">Introduction</a></li><li><span class="item-toggle-none"></span><a href="#sec-Object.fromEntries" title="Object.fromEntries ( iterable )"><span class="secnum">1</span> Object.fromEntries ( iterable )</a></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version first">Stage 0 Draft / March 21, 2018</h1><h1 class="title">Object.fromEntries</h1>
+
+@media print {
+  #menu-toggle {
+    display: none; 
+  }
+}
+</style></head><body><div id="menu-toggle">☰</div><div id="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins</div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-intro" title="Introduction">Introduction</a></li><li><span class="item-toggle-none"></span><a href="#sec-Object.fromEntries" title="Object.fromEntries ( iterable )"><span class="secnum">1</span> Object.fromEntries ( iterable )</a></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version first">Stage 2 Draft / June 29, 2018</h1><h1 class="title">Object.fromEntries</h1>
 
 <emu-intro id="sec-intro">
   <h1>Introduction</h1>
