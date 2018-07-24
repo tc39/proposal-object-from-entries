@@ -22,7 +22,7 @@ contributors: Darien Maillet Valentine, Jordan Harband, Kevin Gibbons
     1. Assert: _obj_ is an extensible ordinary object with no own properties.
     1. Let _iter_ be ? GetIterator(_iterable_).
     1. If _iter_ is *undefined* or *null*, return _obj_.
-    1. Let _stepsDefine_ be the algorithm steps defined in <emu-xref href="#sec-create-data-property-functions">CreateDataProperty Functions</emu-xref>.
+    1. Let _stepsDefine_ be the algorithm steps defined in <emu-xref href="#sec-create-data-property-on-object-functions">CreateDataPropertyOnObject Functions</emu-xref>.
     1. Let _adder_ be CreateBuiltinFunction(_stepsDefine_, &laquo; &raquo;).
     1. Return ? AddEntriesFromIterable(_obj_, _iterable_, _adder_).
   </emu-alg>
@@ -31,9 +31,9 @@ contributors: Darien Maillet Valentine, Jordan Harband, Kevin Gibbons
   </emu-note>
 </emu-clause>
 
-<emu-clause id="sec-create-data-property-functions">
-  <h1>CreateDataProperty Functions</h1>
-  <p>A CreateDataProperty function is an anonymous built-in function. When a CreateDataProperty function is called with arguments _key_ and _value_, the following steps are taken:</p>
+<emu-clause id="sec-create-data-property-on-object-functions">
+  <h1>CreateDataPropertyOnObject Functions</h1>
+  <p>A CreateDataPropertyOnObject function is an anonymous built-in function. When a CreateDataPropertyOnObject function is called with arguments _key_ and _value_, the following steps are taken:</p>
   <emu-alg>
     1. Let _obj_ be the *this* value.
     1. Assert: Type(_obj_) is Object.
