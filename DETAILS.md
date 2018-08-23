@@ -53,7 +53,7 @@ This is consistent with the `Map` constructor.
 
 ### Iterable or array-like
 
-This proposal requires its first argument to be an iterable, not an "array-like" (an object with a number-valued `length` property and possibly number-keyed properties). This means that passing, for example, an `arguments` object will cause this method to to throw (assuming no one has defined `Object.prototype[@@iterator]`). This is inconsistent with `Array.from`, which accepts "array-likes".
+This proposal requires its first argument to be an iterable, not an "array-like" (an object with a number-valued `length` property and possibly number-keyed properties). This means that passing, for example, an `arguments` object will cause this method to throw (assuming no one has defined `Object.prototype[@@iterator]`). This is inconsistent with `Array.from`, which accepts "array-likes".
 
 However, the behavior of `Array.from` is very specifically [intended for the conversion of array-likes](https://github.com/tc39/proposal-setmap-offrom/issues/3#issue-175135115), and does not need to be copied elsewhere.
 
