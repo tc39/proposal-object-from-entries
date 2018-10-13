@@ -23,7 +23,7 @@ contributors: Darien Maillet Valentine, Jordan Harband, Kevin Gibbons
     1. Assert: _obj_ is an extensible ordinary object with no own properties.
     1. Let _stepsDefine_ be the algorithm steps defined in <emu-xref href="#sec-create-data-property-on-object-functions">CreateDataPropertyOnObject Functions</emu-xref>.
     1. Let _adder_ be CreateBuiltinFunction(_stepsDefine_, &laquo; &raquo;).
-    1. Return ? AddEntriesFromIterable(_obj_, _iterable_, _adder_).
+    1. Return ? <a href="https://tc39.github.io/ecma262/#sec-add-entries-from-iterable">AddEntriesFromIterable</a>(_obj_, _iterable_, _adder_).
   </emu-alg>
   <emu-note>
     The function created for _adder_ is never directly accessible to ECMAScript code.
