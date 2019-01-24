@@ -80,7 +80,7 @@ This is somewhat arbitrary, but is consistent with regular assignment: `({}[{ to
 
 This proposal does not allow specifying the prototype of the resulting object.
 
-However, `Object.assign(Object.create(proto), Object.fromEntries(entries))` can be used for the same effect.
+However, `Object.assign(Object.create(proto), Object.fromEntries(entries))` can be used for the same effect (modulo [[Set]] vs [[DefineOwnProperty]] differences).
 
 Issue: [#13](https://github.com/bakkot/object-from-entries/issues/13).
 
@@ -96,7 +96,7 @@ However, given such a list, `Object.defineProperties({}, Object.fromEntries(list
 
 This proposal does not allow installing properties on an existing object.
 
-However, `Object.assign(obj, Object.fromEntries(entries))` can be used for the same effect.
+However, `Object.assign(obj, Object.fromEntries(entries))` can be used for the same effect (modulo [[Set]] vs [[DefineOwnProperty]] differences).
 
 
 ### [[Set]] vs [[DefineOwnProperty]]
