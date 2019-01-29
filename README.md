@@ -1,5 +1,7 @@
 # Object.fromEntries
 
+This repository is now archived, since the proposal is stage 4.
+
 A proposal for a new static method `Object.fromEntries` in ECMAScript for transforming a list of key-value pairs into an object.
 
 This proposal was originally written by [Darien Maillet Valentine](https://github.com/bathos) and is being championed by [Jordan Harband](https://github.com/ljharb) and [Kevin Gibbons](https://github.com/bakkot).
