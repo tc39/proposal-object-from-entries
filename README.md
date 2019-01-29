@@ -4,10 +4,11 @@ A proposal for a new static method `Object.fromEntries` in ECMAScript for transf
 
 This proposal was originally written by [Darien Maillet Valentine](https://github.com/bathos) and is being championed by [Jordan Harband](https://github.com/ljharb) and [Kevin Gibbons](https://github.com/bakkot).
 
-<!-- MarkdownTOC autolink=true bracket=round depth=3 -->
+<!-- MarkdownTOC autolink=true -->
 
 - [Proposal](#proposal)
 - [Rationale](#rationale)
+  - [When is this useful?](#when-is-this-useful)
 - [Motivating examples](#motivating-examples)
   - [Object-to-object property transformations](#object-to-object-property-transformations)
   - [Object from existing collection](#object-from-existing-collection)
@@ -53,6 +54,29 @@ obj = Array.from(map).reduce((acc, [ key, val ]) => Object.assign(acc, { [key]: 
 
 This can be written many different ways, and potentially adds noise because it's not likely to be obviously related to the outward purpose of the function doing it.
 
+### When is this useful?
+
+`Object.fromEntries` doesn’t imply a preference for ordinary objects over `Map`.
+
+If you have a collection with an arbitrary set of keys, even if they’re strings,
+and especially if you intend to add/remove members over time, `Map` data is
+likely a more appropriate model than object properties. Properties are
+well-suited to describing interfaces or fixed-shape models, but poorly suited
+for modeling arbitrary hashes, and `Map` aims to serve that case better.
+
+We don’t always get to choose the model. This is one of the things `fromEntries`
+is meant to help with. Recognizing that some data is an arbitrary collection,
+one might prefer to model it using `Map`. Later that data may need to be passed
+to an API whose contract expects it to be modeled as an ordinary object though
+(think query params, headers, etc): `externalAPI(Object.fromEntries(myMap))`.
+
+Data that comes from or must be serializable to JSON often uses properties to
+model arbitrary collections. Metaprogramming that reflects on entries is another
+scenario where we may manipulate or filter entries and then wish to convert them
+back into an object — for example, when processing objects suitable for passing
+to `Object.defineProperties`. For one more example, while not everybody agrees
+on whether it’s a good idea, contracts involving arbitrary-key objects may also
+be chosen deliberately if an author feels they improve API ergonomics.
 
 ## Motivating examples
 
